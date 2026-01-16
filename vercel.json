@@ -1,12 +1,19 @@
 {
-  "build": {
-    "src": "index.js",
-    "use": "@vercel/node"
+  "name": "real-estate-system",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "vercel-build": "next build"
   },
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/"
-    }
-  ]
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "@vercel/node": "^3.0.0"
+  }
 }
