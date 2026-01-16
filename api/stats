@@ -1,0 +1,80 @@
+#!/usr/bin/env node
+
+const fs = require('fs').promises;
+const path = require('path');
+
+async function generateStats() {
+    try {
+        const dataDir = path.join(__dirname, '..', 'data');
+        const files = await fs.readdir(dataDir);
+        
+        console.log('📊 ئاماری داتاکان:\n');
+        
+        for (const file of files.filter(f => f.endsWith('.json'))) {
+            try {
+                const filePath = path.join(dataDir, file);
+                const data = await fs.readFile(filePath, 'utf8');
+                const jsonData = JSON.parse(data);
+                
+                console.log(`📄 ${file}:`);
+                console.log(`   📊 ژمارەی تۆمارەکان: ${jsonData.length}`);
+                
+                if (file === 'requests.json' && jsonData.length > 0) {
+                    const statusCounts = {};
+                    const typeCounts = {};
+                    
+                    jsonData.forEach(item => {
+                        statusCounts[item.status] = (statusCounts[item.status] || 0) + 1;
+                        typeCounts[item.type] = (typeCounts[item.type] || 0) + 1;
+                    });
+                    
+                    console.log('   🏷️  دۆخەکان:');
+                    Object.entries(statusCounts).forEach(([status, count]) => {
+                        console.log(`        ${status}: ${count}`);
+                    });
+                    
+                    console.log('   🏠 جۆرەکان:');
+                    Object.entries(typeCounts).forEach(([type, count]) => {
+                        console.log(`        ${type}: ${count}`);
+                    });
+                }
+                
+                if (file === 'advertisements.json' && jsonData.length > 0) {
+                    const totalViews = jsonData.reduce((sum, ad) => sum + (ad.views || 0), 0);
+                    const totalClicks = jsonData.reduce((sum, ad) => sum + (ad.clicks || 0), 0);
+                    const activeAds = jsonData.filter(ad => ad.status === 'active').length;
+                    
+                    console.log(`   👁️  کۆی بینینەکان: ${totalViews}`);
+                    console.log(`   🖱️  کۆی کلیکەکان: ${totalClicks}`);
+                    console.log(`   🟢 رێکلامە چالاکەکان: ${activeAds}`);
+                }
+                
+                console.log('');
+            } catch (error) {
+                console.error(`❌ هەڵە لە خوێندنەوەی ${file}:`, error.message);
+            }
+        }
+        
+        // قەبارەی فایلەکان
+        console.log('📏 قەبارەی فایلەکان:');
+        for (const file of files.filter(f => f.endsWith('.json'))) {
+            try {
+                const filePath = path.join(dataDir, file);
+                const stats = await fs.stat(filePath);
+                const sizeKB = (stats.size / 1024).toFixed(2);
+                console.log(`   ${file}: ${sizeKB} KB`);
+            } catch (error) {
+                console.error(`❌ هەڵە لە وەرگرتنی قەبارەی ${file}:`, error.message);
+            }
+        }
+        
+    } catch (error) {
+        console.error('🔥 هەڵە لە دروستکردنی ئامارەکان:', error);
+    }
+}
+
+if (require.main === module) {
+    generateStats();
+}
+
+module.exports = generateStats;
