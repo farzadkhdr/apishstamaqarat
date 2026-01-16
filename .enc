@@ -1,24 +1,5 @@
-ADMIN_TOKEN=request-system-admin-2024-secret-key
-ALLOWED_ORIGINS=https://dawakrdn.vercel.app,https://systamwargrtn.vercel.app
-# پۆرت
 PORT=3001
-
-# مۆد
-NODE_ENV=development
-
-# Tokenی ئەدمین
-ADMIN_TOKEN=your-secret-admin-token-here
-
-# دۆمەینەکان
-ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
-
-# ڕێکخستنەکانی فایل
+NODE_ENV=production
+ADMIN_TOKEN=your-secret-admin-token
+ALLOWED_ORIGINS=https://dawakrdn.vercel.app,https://systamwargrtn.vercel.app
 MAX_FILE_SIZE=5242880
-MAX_REQUEST_SIZE=10485760
-
-# پاشەکەوت
-BACKUP_INTERVAL=3600000
-MAX_BACKUPS=30
-
-# دیبەگ
-DEBUG=true
