@@ -1,13 +1,10 @@
-# داتابەیس و فایلەکانی داتا
+# داتا و فایلەکانی سیستەم
 data/
 uploads/
-backup-*.json
-
-# ماکیاڵەکان
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+backups/
+*.log
+*.tmp
+*.temp
 
 # ڕێکخستنەکان
 .env
@@ -15,30 +12,53 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+.env*.backup
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+*.sublime-*
 
 # سیستم
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# لۆگەکان
-*.log
-logs/
-
-# Test coverage
+# Test
 coverage/
 .nyc_output
+test-results/
 
-# Build outputs
+# Build
 dist/
 build/
 out/
+.next/
+.nuxt/
 
-# Temporary files
-tmp/
-temp/
+# دۆکەر
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# SSL
+*.pem
+*.key
+*.crt
+*.csr
+
+# Backup
+backup-*.json
+dump-*.sql
